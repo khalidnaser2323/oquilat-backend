@@ -1,0 +1,9 @@
+const COMPLAINT_STATUS_ENUM = ['received', 'handling', 'resolved'];
+module.exports = {
+  COMPLAINT_STATUS_ENUM,
+  COMPLAINT_STATUS: {
+    RECEIVED: COMPLAINT_STATUS_ENUM[0],
+    HANDLING: COMPLAINT_STATUS_ENUM[1],
+    RESOLVED: COMPLAINT_STATUS_ENUM[2]
+  },
+};

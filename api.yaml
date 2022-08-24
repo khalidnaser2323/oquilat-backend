@@ -1,0 +1,2525 @@
+openapi: 3.0.1
+info:
+  title: Base
+  description: Description
+  version: 1.0.0
+servers:
+  - url: 'https://api-ecommerce.hakaya.technology'
+  - url: 'http://localhost:3000'
+paths:
+  /:
+    get:
+      tags:
+        - Public
+      summary: Get App version
+      responses:
+        200:
+          $ref: '#/components/responses/version'
+  /login:
+    post:
+      tags:
+        - Public
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+      responses:
+        200:
+          $ref: '#/components/responses/id'
+  /verify:
+    post:
+      tags:
+        - Public
+      summary: Verify
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verify'
+
+      responses:
+        200:
+          $ref: '#/components/responses/userLoggedIn'
+
+  /categories:
+    post:
+      tags:
+        - Category
+      summary: add Category
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categorySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/category'
+    get:
+      tags:
+        - Category
+      summary: get categories
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/categories'
+  /categoriesWithSubs:
+    get:
+      tags:
+        - Category
+      summary: get categories with subs
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/categoriesWithSubs'
+
+  /categories/{id}:
+    put:
+      tags:
+        - Category
+      summary: update Category
+      parameters:
+        - name: id
+          in: path
+          required: true
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/categorySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/category'
+
+    get:
+      tags:
+        - Category
+      summary: get category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/category'
+
+    delete:
+      tags:
+        - Category
+      summary: delete category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /cities:
+    post:
+      tags:
+        - City
+      summary: add City
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/countrySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/country'
+    get:
+      tags:
+        - City
+      summary: get Cityies
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/country'
+
+  /cities/{id}:
+    put:
+      tags:
+        - City
+      summary: update City
+      parameters:
+        - name: id
+          in: path
+          required: true
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/countrySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/country'
+
+    get:
+      tags:
+        - City
+      summary: get City
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/country'
+
+    delete:
+      tags:
+        - City
+      summary: delete City
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /shipping:
+    post:
+      tags:
+        - Shipping
+      summary: add Shipping
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/shipping'
+    get:
+      tags:
+        - Shipping
+      summary: get Shipping types
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/allShipping'
+
+  /shipping/{id}:
+    put:
+      tags:
+        - Shipping
+      summary: update Shipping
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/shipping'
+
+    get:
+      tags:
+        - Shipping
+      summary: get Shipping
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/shipping'
+
+    delete:
+      tags:
+        - Shipping
+      summary: delete Shipping
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /categories/{categoryId}/subs:
+    post:
+      tags:
+        - Item
+      summary: Add Category Item
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/subCategorySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/item'
+    get:
+      tags:
+        - Item
+      summary: get category items
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/item'
+
+  /categories/{categoryId}/subs/{subId}:
+    put:
+      tags:
+        - Item
+      summary: update Category Item
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+
+        - name: subId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/subCategorySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/item'
+
+    get:
+      tags:
+        - Item
+      summary: Get Category Item
+      parameters:
+        - name: categoryItem
+          in: path
+          required: true
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/item'
+
+    delete:
+      tags:
+        - Item
+      summary: Delete Category Item
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /cities/{cityId}/areas:
+    post:
+      tags:
+        - Area
+      summary: Add Area
+      parameters:
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/citySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/city'
+    get:
+      tags:
+        - City
+      summary: get City
+      parameters:
+        - name: countryId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/city'
+
+  /cities/{cityId}/areas/{areaId}:
+    put:
+      tags:
+        - Area
+      summary: update Area
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/citySchema'
+      responses:
+        200:
+          $ref: '#/components/responses/city'
+
+    get:
+      tags:
+        - Area
+      summary: Get Area details
+      parameters:
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/city'
+
+    delete:
+      tags:
+        - Area
+      summary: Delete Area
+      parameters:
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+
+  /promoCodes:
+    post:
+      tags:
+        - Offers
+      summary: add offer
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/promoCodeSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/promocode'
+    get:
+      tags:
+        - Offers
+      summary: get promocodes
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/promocode'
+  /promoCodes/check:
+    get:
+      tags:
+        - Offers
+      summary: get promocode by Code and send "code" as query param
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/promocode'
+  /promoCodes/{id}:
+    put:
+      tags:
+        - Offers
+      summary: update promoCode
+      parameters:
+        - name: id
+          in: path
+          required: true
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/promoCodeSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/promoCode'
+
+    get:
+      tags:
+        - Offers
+      summary: get promoCode
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/promocode'
+
+    delete:
+      tags:
+        - Offers
+      summary: delete promoCode
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /options:
+    post:
+      tags:
+        - Options
+      summary: add option
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/optionSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/option'
+    get:
+      tags:
+        - Options
+      summary: get Options
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/option'
+  /options/{id}:
+    put:
+      tags:
+        - Options
+      summary: update Option
+      parameters:
+        - name: id
+          in: path
+          required: true
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/optionSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/option'
+
+    get:
+      tags:
+        - Options
+      summary: get Option
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/option'
+
+    delete:
+      tags:
+        - Options
+      summary: delete Option
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /options/{id}/optionItems:
+    post:
+      tags:
+        - OptionItem
+      summary: add option item
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/optionItemSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/optionItem'
+    get:
+      tags:
+        - OptionItem
+      summary: get Option itmes
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/optionItem'
+  /options/{optionId}/optionItems/{id}:
+    put:
+      tags:
+        - OptionItem
+      summary: update OptionItem
+      parameters:
+        - name: optionId
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/optionItemSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/optionItem'
+
+    get:
+      tags:
+        - OptionItem
+      summary: get OptionItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/optionItem'
+
+    delete:
+      tags:
+        - OptionItem
+      summary: delete OptionItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /minMaxPrice:
+    get:
+      tags:
+        - Product
+      summary: get Min max prices  (u can filter by sending category as query params)
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/prices'
+  /products:
+    post:
+      tags:
+        - Product
+      summary: add Product
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/productSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/product'
+    get:
+      tags:
+        - Product
+      summary: get Products
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/product'
+  /products/{id}:
+    get:
+      tags:
+        - Product
+      summary: get Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/product'
+    delete:
+      tags:
+        - Product
+      summary: delete Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/product'
+    put:
+      tags:
+        - Product
+      summary: update Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/productSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/product'
+  /complaint:
+    post:
+      tags:
+        - Complaint
+      summary: add Complaint
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/complaintSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/complaint'
+    get:
+      tags:
+        - complaint
+      summary: get complaints
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/complaint'
+  /orderEdits:
+    post:
+      tags:
+        - orderEdits
+      summary: add orderEdits
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/orderEditsSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/orderEdits'
+    get:
+      tags:
+        - orderEdits
+      summary: get orderEdits
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/orderEdits'
+  /search:
+    post:
+      tags:
+        - Search
+      summary: add Search input
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/searchSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/search'
+
+
+  /users/favorite/products/{id}:
+    post:
+      tags:
+        - Favorite Product
+      summary: add Product to favorite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/favoriteProduct'
+    delete:
+      tags:
+        - Favorite Product
+      summary: delete Product from favorite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/favoriteProduct'
+
+  /users/favorite/products:
+    get:
+      tags:
+        - Favorite Product
+      summary: get favorite Product
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/favoriteProduct'
+
+  /orders:
+    post:
+      tags:
+        - Order
+      summary: make Order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/oneOrderSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/ordersRes'
+    get:
+      tags:
+        - Order
+      summary: get orders
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/ordersRes'
+  /orders/{orderId}:
+    put:
+      tags:
+        - Order
+      summary: update Order status
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orderStatusSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/ordersRes'
+    delete:
+      tags:
+        - Order
+      summary: delete Order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /search/{deviceId}:
+    get:
+      tags:
+        - Search
+      summary: get Search inputs by deviceId
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/search'
+    delete:
+      tags:
+        - Search
+      summary: Clear Search inputs by deviceId
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/message'
+  /users:
+    get:
+      tags:
+        - User
+      summary: get all users
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+  /users/{userId}:
+    get:
+      tags:
+        - User
+      summary: get user details
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+    put:
+      tags:
+        - User
+      summary: update user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/updateUser'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+  /users/{userId}/orders:
+    get:
+      tags:
+        - User
+      summary: get my Orders ( you can filter by sending query param status=current or previous)
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/ordersRes'
+  /users/{userId}/addresses:
+    post:
+      tags:
+        - User
+      summary: add address user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addressSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+  /users/{userId}/addresses/{addressId}:
+    put:
+      tags:
+        - User
+      summary: add address user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: addressId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addressSchema'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+    delete:
+      tags:
+        - User
+      summary: update user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: addressId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+
+  /configurations:
+    put:
+      tags:
+        - Configurations
+      summary: edit configuration
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/configuration'
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/configurationSchema'
+    get:
+      tags:
+        - Configurations
+      summary: get all configurations
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          $ref: '#/components/responses/getConfiguration'
+
+
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  responses:
+    version:
+      description: App Version.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/versionResponse'
+    id:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/idSchema'
+    prices:
+      description: min&max.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/minMaxPriceSchema'
+    messages:
+      description: messages.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/messagesSchema'
+    skills:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/skillsSchema'
+    jobAppliers:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jobAppliersSchema'
+    categories:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/categorySchema'
+    category:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/oneCategory'
+    categoriesWithSubs:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/categoriesWithSubs'
+    country:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/countrySchema'
+    shipping:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ShippingSchema'
+    allShipping:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllShippingSchema'
+    city:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/citySchema'
+    brand:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/brandSchema'
+    option:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/optionSchema'
+    optionItem:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/optionItemSchema'
+    user:
+      description: Get All Users.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSchema'
+    promocode:
+      description: order offer.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/promoCodeSchema'
+
+    product:
+      description: get product.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getProductSchema'
+    search:
+      description: get search.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/searchResponse'
+    ordersRes:
+      description: get search.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ordersSchema'
+
+    notification:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/notificationSchema'
+    rate:
+      description: rate.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rateResponseSchema'
+    rates:
+      description: rate.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/orderRatesResponseSchema'
+    configuration:
+      description: Configuration
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/configurationSchema'
+    getConfiguration:
+      description: Configuration
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/configurationResponseSchema'
+    configurations:
+      description: configuration .
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/addConfigurationSchema'
+
+
+
+
+
+
+
+
+    userLoggedIn:
+      description: Login.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/userLoggedInSchema'
+    message:
+      description: Message.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/messageSchema'
+    address:
+      description: Message.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/addressSchema'
+
+
+  schemas:
+    errorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        message:
+          type: string
+        stack:
+          type: string
+    versionResponse:
+      type: object
+      properties:
+        version:
+          type: "string"
+          example: "0.0.0"
+        name:
+          type: "string"
+          example: "Api"
+    idSchema:
+      type: object
+      properties:
+        id:
+          type: "string"
+          example: "5c9b8a228e6a017fdfa2488c"
+    userLoggedInSchema:
+      type: object
+      properties:
+        _id:
+          type: "string"
+          example: "5c9b8a228e6a017fdfa2488c"
+        mobile:
+          type: "string"
+          example: "+2011242"
+        roles:
+          type: "array"
+          items:
+            type: "string"
+          example:
+            - "customer"
+        token:
+          type: "string"
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YzliOGEyMjhlNmEwMTdmZGZhMjQ4OGMiLCJtb2JpbGUiOiIrMjAxMTI0MiIsInJvbGVzIjpbImN1c3RvbWVyIl0sImlhdCI6MTU1MzY5NzMxNH0.XsVW_qqBRnD5mplYVutE-dRZt2eCDhEr8E21UKtIRB4"
+
+    login:
+      type: object
+      properties:
+        mobile:
+          type: "string"
+          example: "+2011242"
+        type:
+          type: "string"
+          example: "customer"
+    verify:
+      type: object
+      properties:
+        user:
+          type: "string"
+          example: "+2011242"
+        mobile_token:
+          type: "number"
+          example: 332859
+
+    messageSchema:
+      type: object
+      properties:
+        message:
+          type: "string"
+          example: "Item has been deleted"
+    addCategory:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: "string"
+              example: "Body care"
+            translation:
+              required:
+                - "ar"
+              properties:
+                ar:
+                  required:
+                    - "name"
+                  properties:
+                    name:
+                      type: "string"
+                      example: "Body care in arabic"
+                  type: "object"
+              type: "object"
+            images:
+              type: "array"
+              items:
+                type: "string"
+              example:
+                - "https://hykaia.sfo2.digitaloceanspaces.com/kawafir/4fyu2eyxjtsem0jg.jpg"
+        images:
+          type: string
+          format: binary
+    categorySchema:
+      properties:
+        name:
+          type: "string"
+        translation:
+          required:
+            - "ar"
+          properties:
+            ar:
+              required:
+                - "name"
+              properties:
+                name:
+                  type: "string"
+              type: "object"
+          type: "object"
+    categoriesWithSubs:
+      properties:
+        _id:
+          type: "string"
+        name:
+          type: "string"
+        subCategories:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              _id:
+                type: "string"
+              name:
+                type: "string"
+        translation:
+          required:
+            - "ar"
+          properties:
+            ar:
+              required:
+                - "name"
+              properties:
+                name:
+                  type: "string"
+              type: "object"
+          type: "object"
+
+    brandSchema:
+      type: "object"
+      properties:
+        data:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            category:
+              type: "string"
+            translation:
+              required:
+                - "ar"
+              properties:
+                ar:
+                  required:
+                    - "name"
+                  properties:
+                    name:
+                      type: "string"
+                  type: "object"
+        images:
+          type: string
+          format: binary
+    optionSchema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        subCategories:
+          type: "array"
+          items:
+            type: "string"
+
+        translation:
+          required:
+            - "ar"
+          properties:
+            ar:
+              required:
+                - "name"
+              properties:
+                name:
+                  type: "string"
+              type: "object"
+    optionItemSchema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        option:
+          type: "string"
+        translation:
+          required:
+            - "ar"
+          properties:
+            ar:
+              required:
+                - "name"
+              properties:
+                name:
+                  type: "string"
+              type: "object"
+
+    oneCategory:
+      properties:
+        _id:
+          type: "string"
+        name:
+          type: "string"
+        created_at:
+          type: "string"
+        updated_at:
+          type: "string"
+        __v:
+          type: "number"
+    countrySchema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        translation:
+          type: "object"
+          properties:
+            ar:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+    ShippingSchema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        description:
+          type: "string"
+        cost:
+          type: "number"
+        days:
+          type: "number"
+        type:
+          type: "string"
+        activated:
+          type: "boolean"
+
+        translation:
+          type: "object"
+          properties:
+            ar:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                description:
+                  type: "string"
+    AllShippingSchema:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          description:
+            type: "string"
+          cost:
+            type: "number"
+          days:
+            type: "number"
+          type:
+            type: "string"
+          activated:
+            type: "boolean"
+
+          translation:
+            type: "object"
+            properties:
+              ar:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                  description:
+                    type: "string"
+
+    citySchema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        city:
+          type: "string"
+        translation:
+          type: "object"
+          properties:
+            ar:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+
+    RatechemaS:
+      type: "object"
+      properties:
+        rated:
+          type: "string"
+        comment:
+          type: "string"
+        job:
+          type: "string"
+    productSchema:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: "string"
+              example: "product1"
+            price:
+              type: "number"
+              example: 100
+            quantity:
+              type: "number"
+              example: 10
+            description:
+              type: "string"
+              example: 'very good product'
+            barcode:
+              type: "string"
+              example: 'mdanm5532'
+            free_tax:
+              type: "boolean"
+              example: true
+            free_shipping:
+              type: "boolean"
+              example: false
+            specifications:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                  value:
+                    type: "string"
+                  translation:
+                    type: "object"
+                    properties:
+                      ar:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                          value:
+                            type: "string"
+
+            category:
+              type: "string"
+              example: "029109204984"
+            subCategory:
+              type: "string"
+              example: "029109204984"
+            brand:
+              type: "string"
+              example: "3dfk234kd924r9"
+            options:
+              type: "array"
+              items:
+                properties:
+                  option:
+                    type: "string"
+                    example: "5cac58b26700ef14a0f48c05"
+                  question:
+                    type: "string"
+                    example: "what is the size"
+                  is_overriding_price:
+                    type: "boolean"
+                    example: "true"
+                  is_mandatory:
+                    type: "boolean"
+                    example: "true"
+                  choices:
+                    type: "array"
+                    items:
+                      properties:
+                        item:
+                          type: "string"
+                          example: "5cac59766700ef14a0f48c09"
+                        price:
+                          type: "number"
+                          example: "99"
+                  translation:
+                    required:
+                      - "ar"
+                    properties:
+                      ar:
+                        properties:
+                          question:
+                            type: "string"
+                          description:
+                            type: "string"
+                          specifications:
+                            type: "array"
+                            items:
+                              type: "object"
+                              properties:
+                                name:
+                                  type: "string"
+                                value:
+                                  type: "string"
+
+                        type: "object"
+
+            translation:
+              properties:
+                ar:
+                  properties:
+                    name:
+                      type: "string"
+                    description:
+                      type: "string"
+
+                  type: "object"
+        images:
+          type: string
+          format: binary
+        main_image:
+          type: string
+          format: binary
+    subCategorySchema:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: "string"
+              example: "Item1"
+            category:
+              type: "string"
+            __v:
+              type: "number"
+              example: 0
+        logo:
+          type: string
+          format: binary
+    searchSchema:
+      type: object
+      properties:
+        device_id:
+          type: "string"
+          example: "Item1"
+        search_input:
+          type: "string"
+
+    UserSchema:
+      type: object
+      properties:
+        _id:
+          type: "string"
+        mobile:
+          type: "string"
+        name:
+          type: "string"
+        email:
+          type: "string"
+        fcm_token:
+          type: "string"
+        roles:
+          type: "array"
+          items:
+            type: "string"
+        profile_image:
+          type: "string"
+        device_id:
+          type: "string"
+        search_inputs:
+          type: "array"
+          items:
+            type: "string"
+        addresses:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              address:
+                type: "string"
+              mobile:
+                type: "string"
+              special_mark:
+                type: "string"
+              city:
+                type: "string"
+              area:
+                type: "string"
+              default:
+                type: "boolean"
+
+    updateUser:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: "string"
+            mobile:
+              type: "string"
+            email:
+              type: "string"
+        profile_image:
+          type: string
+          format: binary
+
+    addressSchema:
+      type: "object"
+      properties:
+        address:
+          type: "string"
+        name:
+          type: "string"
+        mobile:
+          type: "string"
+        special_mark:
+          type: "string"
+        city:
+          type: "string"
+        area:
+          type: "string"
+        default:
+          type: "boolean"
+
+    notificationSchema:
+      type: object
+      properties:
+        title:
+          type: "string"
+          example: "order created"
+        message:
+          type: "string"
+          example: "your order in progress"
+        data:
+          type: "string"
+          example: "order"
+        notified:
+          type: "string"
+          example: "5cb318161bc65e0016447b7e"
+        ref:
+          type: "string"
+          example: "5cb236461bc65e0016447b7e"
+    oneOrderSchema:
+      properties:
+        products:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              product_id:
+                type: "string"
+              count:
+                type: "number"
+              options:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    option_id:
+                      type: "string"
+                    is_selected:
+                      type: "boolean"
+                    choices:
+                      type: "array"
+                      items:
+                        type: "string"
+        promo_code:
+          type: "string"
+        total_price:
+          type: "number"
+        payment_type:
+          type: "number"
+        shipping_type:
+          type: "number"
+        address:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            mobile:
+              type: "string"
+            city:
+              type: "string"
+            area:
+              type: "string"
+            address:
+              type: "string"
+            specila_mark:
+              type: "string"
+
+    updateOrderStatusSchema:
+      type: object
+      properties:
+        status:
+          type: "string"
+          example: "canceled"
+
+    orderOfferSchema:
+      type: object
+      properties:
+        address:
+          properties:
+            address:
+              type: "string"
+            location:
+              type: "array"
+              items:
+                type: "number"
+          type: "object"
+        delivery:
+          type: "string"
+    getProductSchema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "product1"
+        price:
+          type: "number"
+          example: 100
+        quantity:
+          type: "number"
+          example: 10
+        main_image:
+          type: "string"
+          example: "https://dadada;lma;"
+        images:
+          type: array
+          items:
+            type: "string"
+        description:
+          type: "string"
+          example: 'very good product'
+        barcode:
+          type: "string"
+          example: 'mdanm5532'
+        free_tax:
+          type: "boolean"
+          example: true
+        free_shipping:
+          type: "boolean"
+          example: false
+        specifications:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              value:
+                type: "string"
+        category:
+          type: "string"
+          example: "029109204984"
+        subCategory:
+          type: "string"
+          example: "029109204984"
+        brand:
+          type: "string"
+          example: "3dfk234kd924r9"
+        options:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              option:
+                type: "string"
+                example: "5cac58b26700ef14a0f48c05"
+              question:
+                type: "string"
+                example: "what is the size"
+              is_overriding_price:
+                type: "boolean"
+                example: "true"
+              is_mandatory:
+                type: "boolean"
+                example: "true"
+              choices:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    item:
+                      type: "string"
+                      example: "5cac59766700ef14a0f48c09"
+                    price:
+                      type: "number"
+                      example: "99"
+              translation:
+                type: "object"
+                properties:
+                  ar:
+                    type: "object"
+                    properties:
+                      name:
+                        type: "string"
+                      description:
+                        type: "string"
+        discount:
+          type: "object"
+          properties:
+            _id:
+              type: "string"
+            value:
+              type: "number"
+            date_from:
+              type: "string"
+            date_to:
+              type: "string"
+        categoryDiscount:
+          type: "object"
+          properties:
+            _id:
+              type: "string"
+            value:
+              type: "number"
+            date_from:
+              type: "string"
+            date_to:
+              type: "string"
+        sybCategoryDiscount:
+          type: "object"
+          properties:
+            _id:
+              type: "string"
+            value:
+              type: "number"
+            date_from:
+              type: "string"
+            date_to:
+              type: "string"
+
+
+    rateSchema:
+      type: object
+      properties:
+        rate:
+          type: "number"
+        comment:
+          type: "string"
+    rateResponseSchema:
+      type: object
+      properties:
+        _id:
+          type: "string"
+        rate:
+          type: "number"
+        comment:
+          type: "string"
+        order:
+          type: "string"
+        rater:
+          type: "string"
+        created_at:
+          type: "string"
+        updated_at:
+          type: "string"
+        __v:
+          type: "number"
+    orderRatesResponseSchema:
+      type: object
+      properties:
+        rates:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              _id:
+                type: "string"
+              rate:
+                type: "number"
+              comment:
+                type: "string"
+              order:
+                type: "string"
+              rater:
+                type: "string"
+              created_at:
+                type: "string"
+              updated_at:
+                type: "string"
+              __v:
+                type: "number"
+        pages:
+          type: "number"
+
+    configurationSchema:
+      type: object
+      properties:
+        data:
+          type: "object"
+          properties:
+            brand_name:
+              type: "string"
+            account_number:
+              type: "string"
+            main_color:
+              type: "string"
+            secondary_color:
+              type: "string"
+            active_tax:
+              type: "boolean"
+            tax:
+              type: "number"
+            delivery_cost:
+              type: "number"
+            payment_types:
+              type: "array"
+              items:
+                type: "string"
+                enum: ['online','delivery_location']
+            shipping_types:
+              type: "array"
+              items:
+                type: "string"
+                enum: ['ours','shipping_company']
+            additional_cost_in_case_payment_type_is_delivery_location:
+              type: "number"
+            payTabs:
+              type: "object"
+              properties:
+                merchant_email:
+                  type: "string"
+                secret_key:
+                  type: "string"
+        logo:
+          type: string
+          format: binary
+    configurationResponseSchema:
+      type: object
+      properties:
+        brand_name:
+          type: "string"
+        account_number:
+          type: "string"
+        about:
+          type: "string"
+        social_media:
+          type: "object"
+          properties:
+            facebook:
+              type: "string"
+            twitter:
+              type: "string"
+            instagram:
+              type: "string"
+            snapChat:
+              type: "string"
+        main_color:
+          type: "string"
+        secondary_color:
+          type: "string"
+        active_tax:
+          type: "boolean"
+        tax:
+          type: "number"
+        delivery_cost:
+          type: "number"
+        payment_types:
+          type: "array"
+          items:
+            type: "string"
+            enum: ['online','delivery_location']
+        shipping_types:
+          type: "array"
+          items:
+            type: "string"
+            enum: ['ours','shipping_company']
+        additional_cost_in_case_payment_type_is_delivery_location:
+          type: "number"
+        payTabs:
+          type: "object"
+          properties:
+            merchant_email:
+              type: "string"
+            secret_key:
+              type: "string"
+        logo:
+          type: string
+    addConfigurationSchema:
+      properties:
+        support_number:
+          type: "string"
+        bank:
+          required:
+            - "logo"
+            - "account_name"
+            - "account_number"
+            - "bank_name"
+          properties:
+            logo:
+              type: "string"
+            account_name:
+              type: "string"
+            account_number:
+              type: "string"
+            bank_name:
+              type: "string"
+          type: "object"
+    promoCodeSchema:
+      type: object
+      properties:
+        type:
+          type: "string"
+          enum: ['custom','product','category','subCategory']
+        code:
+          type: "string"
+        product:
+          type: "string"
+        category:
+          type: "string"
+        subCategory:
+          type: "string"
+        value:
+          type: "number"
+        date_from:
+          type: "string"
+          example:
+            "2020-05-01"
+        date_to:
+          type: "string"
+          example:
+            "2020-05-01"
+        activated:
+          type: "boolean"
+    searchResponse:
+      type: object
+      properties:
+        device_id:
+          type: "string"
+        search_inputs:
+          type: "array"
+          items:
+            type: "string"
+
+    ordersSchema:
+      type: "object"
+      properties:
+        orders:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              _id:
+                type: "string"
+              products:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    options:
+                      type: "array"
+                      items:
+                        type: "undefined"
+                    price_info:
+                      required:
+                        - "count"
+                        - "product_price"
+                        - "total_price"
+                      properties:
+                        count:
+                          type: "number"
+                        product_price:
+                          type: "number"
+                        total_price:
+                          type: "number"
+                      type: "object"
+                    product:
+                      properties:
+                        name:
+                          type: "string"
+                        price:
+                          type: "number"
+                        main_image:
+                          type: "string"
+                        _id:
+                          type: "string"
+                        free_shipping:
+                          type: "boolean"
+                        subCategory_discount:
+                          properties:
+                            _id:
+                              type: "string"
+                            isArchived:
+                              type: "boolean"
+                            type:
+                              type: "string"
+                            value:
+                              type: "number"
+                            subCategory:
+                              type: "string"
+                            date_from:
+                              type: "string"
+                            date_to:
+                              type: "string"
+                            created_at:
+                              type: "string"
+                            updated_at:
+                              type: "string"
+                            __v:
+                              type: "number"
+                          type: "object"
+                      type: "object"
+              order_price_info:
+                properties:
+                  total_order_price:
+                    type: "number"
+                  discount:
+                    type: "number"
+                  tax:
+                    type: "number"
+                  tax_value:
+                    type: "number"
+                  delivery_cost:
+                    type: "number"
+                  additional_cost:
+                    type: "number"
+                  final_price:
+                    type: "number"
+                type: "object"
+              address:
+                properties:
+                  city:
+                    type: "string"
+                  area:
+                    type: "string"
+                  address:
+                    type: "string"
+                  special_mark:
+                    type: "string"
+                  mobile:
+                    type: "string"
+                type: "object"
+              user:
+                required:
+                  - "_id"
+                  - "mobile"
+                properties:
+                  _id:
+                    type: "string"
+                  mobile:
+                    type: "string"
+                type: "object"
+              status:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    text:
+                      type: "string"
+                    created_at:
+                      type: "string"
+              payment_type:
+                type: "string"
+              shipping_type:
+                type: "string"
+              created_at:
+                type: "string"
+              updated_at:
+                type: "string"
+              order_number:
+                type: "string"
+              __v:
+                type: "number"
+        pages:
+          type: "number"
+        length:
+          type: "number"
+    orderStatusSchema:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          example:
+            "completed"
+    minMaxPriceSchema:
+      type: "object"
+      properties:
+        min:
+          type: "number"
+        max:
+          type: "number"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
